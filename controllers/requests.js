@@ -5,27 +5,36 @@ var Request = require('../models/request');
 
 router.route('/')
   .get(function(req, res) {
-    res.send('this is the requests route');
+    Request.readAll(function(err, request) {
+      res.send(request);
+    });
   })
   .post(function(req, res) {
     var body = req.body;
-
-    console.log(Request);
-
-    Request.create(body, function(err) {
-      res.send(err);
+    Request.create(body, function(err, request) {
+      res.send(request);
     });
   });
 
-router.router('/:id')
+router.route('/:id')
   .get(function(req, res) {
-
+    var id = req.params.id;
+    Request.read(id, function(err, request) {
+      res.send(request);
+    });
   })
   .put(function(req, res) {
-
+    var id = req.params.id;
+    var body = req.body;
+    Request.update(id, body, function(err, request) {
+      res.send(request);
+    });
   })
   .delete(function(req, res) {
-
+    var id = req.params.id;
+    Request.delete(id, function(err, request) {
+      res.send(request);
+    });
   });
 
 module.exports = router;
