@@ -3,23 +3,29 @@ var router = express.Router();
 
 var Request = require('../models/request');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('this is the requests route');
-});
+router.route('/')
+  .get(function(req, res) {
+    res.send('this is the requests route');
+  })
+  .post(function(req, res) {
+    var body = req.body;
 
-router.get('/new', function(req, res) {
-  res.send('this is the requests/new route');
-});
+    console.log(Request);
 
-router.post('/new', function(req, res) {
-  var body = req.body;
-
-  console.log(Request);
-
-  Request.create(body, function(err) {
-    res.send(err);
+    Request.create(body, function(err) {
+      res.send(err);
+    });
   });
-});
+
+router.router('/:id')
+  .get(function(req, res) {
+
+  })
+  .put(function(req, res) {
+
+  })
+  .delete(function(req, res) {
+
+  });
 
 module.exports = router;
