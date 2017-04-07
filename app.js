@@ -53,5 +53,3 @@ if (cluster.isMaster) {
   });
   
 }
-
-module.exports = server;
