@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test",
     "start": "node ./bin/www",
     "devStart": "nodemon ./bin/www"
   },
@@ -29,6 +29,11 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
-    "eslint": "^3.19.0"
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "chai-things": "^0.2.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0",
+    "supertest": "^3.0.0"
   }
 }
