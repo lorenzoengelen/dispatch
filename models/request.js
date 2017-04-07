@@ -31,6 +31,16 @@ exports.update = (id, body, cb) => {
   });
 };
 
+exports.deleteAll = cb => {
+  db.find({}).exec((err, requests) => {
+    if (err) return cb(err);
+    db.remove(err => {
+      if (err) return cb(err);
+      cb(null, requests);
+    });
+  });
+};
+
 exports.delete = (id, cb) => {
   db.findOneAndRemove({_id: id}, (err, request) => {
     if (err) return cb(err);

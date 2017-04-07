@@ -16,6 +16,12 @@ router.route('/')
       if (err) res.send(err);
       res.send(request);
     });
+  })
+  .delete((req, res) => {
+    Request.deleteAll((err, requests) => {
+      if (err) res.send(err);
+      res.send(requests);
+    });
   });
 
 router.route('/:id')
