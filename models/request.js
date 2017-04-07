@@ -1,8 +1,9 @@
 const db = require('../db/request');
 
 exports.create = (body, cb) => {
-  const {type} = body;
-  db.create({type: type}, (err, request) => {
+  const {type, location, timeWindow} = body;
+  db.create({type, location, timeWindow}, (err, request) => {
+    console.log(err);
     if (err) return cb(err);
     cb(null, request);
   });
