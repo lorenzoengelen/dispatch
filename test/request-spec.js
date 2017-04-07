@@ -71,14 +71,22 @@ describe('Request Controller', () => {
   });
 
   it('PUT /requests should update a request in the database', (done) => {
-    var answer = 43;
-    expect(answer).to.equal(42);
-    done();
+    
+    chai.request(server)
+      .put('/requests')
+      .send({
+        _id: '1',
+        type: 'pickup'
+      })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        done();
+      });
   });
 
   it('DELETE /requests should delete a request from the database', (done) => {
     var answer = 42;
-    // // AssertionError: expected 43 to equal 42.
     expect(answer).to.equal(42);
     done()
   });
