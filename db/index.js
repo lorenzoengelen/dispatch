@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var mongoUri = 'mongodb://localhost/dispatch';
+const mongoose = require('mongoose');
+const mongoUri = 'mongodb://localhost/dispatch';
 
-var db = mongoose.connect(mongoUri, function(err) {
+const db = mongoose.connect(mongoUri, (err) => {
   if (err) {
     console.log('Unable to connect to mongo', err);
     process.exit(1);

@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var db = require('./index');
+const mongoose = require('mongoose');
+const db = require('./index');
 
-var requestSchema = new mongoose.Schema({
+const requestSchema = new mongoose.Schema({
   type: String
 });
 
-var Request = db.model('Request', requestSchema);
+const Request = db.model('Request', requestSchema);
 
 module.exports = Request;
 

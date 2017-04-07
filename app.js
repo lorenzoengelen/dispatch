@@ -1,14 +1,14 @@
-var http = require('http');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const http = require('http');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var middlewares = require('./middlewares/index');
-var routes = require('./controllers/index');
+const middlewares = require('./middlewares/index');
+const routes = require('./controllers/index');
 
-var app = express();
+const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
@@ -20,11 +20,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(middlewares);
+// controllers
 app.use('/', routes);
 
-var server = http.createServer(app);
-server.listen(app.get('port'), function() {
-  console.log('Server listening on port', app.get('port'));
+const server = http.createServer(app);
+server.listen(app.get('port'), () => {
+  console.log(`Server listening on port ${app.get('port')}`);
 });
 
 module.exports = server;

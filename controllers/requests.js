@@ -1,38 +1,38 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 var Request = require('../models/request');
 
 router.route('/')
-  .get(function(req, res) {
-    Request.readAll(function(err, request) {
+  .get((req, res) => {
+    Request.readAll((err, request) => {
       res.send(request);
     });
   })
-  .post(function(req, res) {
-    var body = req.body;
-    Request.create(body, function(err, request) {
+  .post((req, res) => {
+    const {body} = req;
+    Request.create(body, (err, request) => {
       res.send(request);
     });
   });
 
 router.route('/:id')
-  .get(function(req, res) {
-    var id = req.params.id;
-    Request.read(id, function(err, request) {
+  .get((req, res) => {
+    const {id} = req.params;
+    Request.read(id, (err, request) => {
       res.send(request);
     });
   })
-  .put(function(req, res) {
-    var id = req.params.id;
-    var body = req.body;
-    Request.update(id, body, function(err, request) {
+  .put((req, res) => {
+    const {id} = req.params;
+    const {body} = req;
+    Request.update(id, body, (err, request) => {
       res.send(request);
     });
   })
-  .delete(function(req, res) {
-    var id = req.params.id;
-    Request.delete(id, function(err, request) {
+  .delete((req, res) => {
+    const {id} = req.params;
+    Request.delete(id, (err, request) => {
       res.send(request);
     });
   });
