@@ -3,20 +3,34 @@ const db = require('./index');
 
 mongoose.Promise = global.Promise;
 
-const requestSchema = new mongoose.Schema({
-  type: { type: String, required: true },
+const taskSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
-  location: {
-    longitude: { type: Number, required: true },
-    latitude: { type: Number, required: true }
+  load: Number,
+  pickup: {
+    serviceTime: Number,
+    timeWindow: {
+      earliestTime: Number,
+      latestTime: Number
+    },
+    location: {
+      longitude: Number,
+      latitude: Number
+    }
   },
-  timeWindow: {
-    lowerBound: { type: Number, required: true },
-    upperBound: { type: Number, required: true }
+  delivery: {
+    serviceTime: Number,
+    timeWindow: {
+      earliestTime: Number,
+      latestTime: Number
+    },
+    location: {
+      longitude: Number,
+      latitude: Number
+    }
   }
 });
 
-const Request = db.model('Request', requestSchema);
+const Task = db.model('Task', taskSchema);
 
-module.exports = Request;
+module.exports = Task;
 
