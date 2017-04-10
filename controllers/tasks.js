@@ -1,50 +1,50 @@
 const express = require('express');
 const router = express.Router();
 
-var Request = require('../models/request');
+var Task = require('../models/task');
 
 router.route('/')
   .get((req, res) => {
-    Request.readAll((err, request) => {
+    Task.readAll((err, task) => {
       if (err) res.send(err);
-      res.send(request);
+      res.send(task);
     });
   })
   .post((req, res) => {
     const {body} = req;
-    Request.create(body, (err, request) => {
+    Task.create(body, (err, task) => {
       if (err) res.send(err);
-      res.send(request);
+      res.send(task);
     });
   })
   .delete((req, res) => {
-    Request.deleteAll((err, requests) => {
+    Task.deleteAll((err, tasks) => {
       if (err) res.send(err);
-      res.send(requests);
+      res.send(tasks);
     });
   });
 
 router.route('/:id')
   .get((req, res) => {
     const {id} = req.params;
-    Request.read(id, (err, request) => {
+    Task.read(id, (err, task) => {
       if (err) res.send(err);
-      res.send(request);
+      res.send(task);
     });
   })
   .put((req, res) => {
     const {id} = req.params;
     const {body} = req;
-    Request.update(id, body, (err, request) => {
+    Task.update(id, body, (err, task) => {
       if (err) res.send(err);
-      res.send(request);
+      res.send(task);
     });
   })
   .delete((req, res) => {
     const {id} = req.params;
-    Request.delete(id, (err, request) => {
+    Task.delete(id, (err, task) => {
       if (err) res.send(err);
-      res.send(request);
+      res.send(task);
     });
   });
 
