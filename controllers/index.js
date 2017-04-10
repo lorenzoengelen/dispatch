@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const users = require('./users');
-const requests = require('./requests');
+const tasks = require('./tasks');
 
 router.use('/users', users);
-router.use('/requests', requests);
+router.use('/tasks', tasks);
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
