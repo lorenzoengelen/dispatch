@@ -1,12 +1,37 @@
 const db = require('../db/task');
 
 exports.create = (body, cb) => {
-  const {type, location, timeWindow} = body;
-  db.create({type, location, timeWindow}, (err, task) => {
-    console.log(err);
-    if (err) return cb(err);
-    cb(null, task);
-  });
+  
+  const createTask = (newTask, callback) => {
+    let {load, pickup, delivery} = newTask;
+    db.create({load, pickup, delivery}, (err, task) => {
+      if (err) return cb(err);
+      callback(task);
+    });
+  };
+
+  // save multiple tasks
+  if (Array.isArray(body)) {
+    let newTasks = [];
+    body.forEach((el, index) => {
+      if (index + 1 === body.length) {
+        createTask(el, newTask => {
+          newTasks.push(newTask);
+          cb(null, newTasks);
+        });
+      } else {
+        createTask(el, newTask => {
+          newTasks.push(newTask);
+        });
+      }
+    });
+  // save single task
+  } else {
+    createTask(body, newTask => {
+      cb(null, newTask);
+    });
+  }
+  
 };
 
 exports.readAll = cb => {
