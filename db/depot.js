@@ -3,7 +3,7 @@ const db = require('./index');
 
 mongoose.Promise = global.Promise;
 
-const depotSchema = new mongoose.Schema({
+const DepotSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
   location: {
     longitude: {type: Number, required: true},
@@ -11,7 +11,17 @@ const depotSchema = new mongoose.Schema({
   }
 });
 
-const Depot = db.model('Task', depotSchema);
+DepotSchema.pre('save', next => {
+  DepotModel.find({}, (err, depot) => {
+    if (!depot.length) {
+      next()
+    } else {
+      next(new Error('Only one depot allowed'));
+    }
+  })
+});
 
-module.exports = Depot;
+const DepotModel = db.model('Depot', DepotSchema);
+
+module.exports = DepotModel;
 
