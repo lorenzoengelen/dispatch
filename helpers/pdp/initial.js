@@ -6,10 +6,22 @@ const Route = function(sequence) {
   this.sequence = sequence || [];
 };
 
-Route.prototype.insert = function(task) {
+Route.prototype.insertTask = function(task) {
   let {_id, pickup, delivery} = task;
-  this.sequence.push({ id: `p${_id}`, location: pickup.location });
-  this.sequence.push({ id: `d${_id}`, location: delivery.location });
+  this.sequence = [...this.sequence, 
+    {id: _id, service: 'pickup', location: pickup.location}, 
+    {id: _id, service: 'delivery', location: delivery.location}];
+};
+
+Route.prototype.removeTask = function(id) {
+  this.sequence = this.sequence.filter(el => {
+    if (el.id !== id) return true;
+    return false;
+  });
+};
+
+Route.prototype.calculateCost = function() {
+
 };
 
 // Depot object
@@ -24,6 +36,29 @@ Depot.prototype.sortTasks = function() {
   return this.tasks.sort((taskA, taskB) => {
     return getDistance(this.depot.location, taskB.delivery.location) - getDistance(this.depot.location, taskA.delivery.location);
   });
+};
+
+// Distances object
+const Distances = function() {
+  this.table = {};
+};
+
+Distances.prototype.getDistance = function(locationA, locationB) {
+  const lookup = (table, coords) => {
+    if (coords.length === 1) {
+      if (table[coords[0]] === undefined) {
+        table[coords[0]] = Math.sqrt(Math.pow(Math.abs(locationA.longitude - locationB.longitude), 2) 
+          + Math.pow(Math.abs(locationA.latitude - locationB.latitude), 2));
+      }
+    } else {
+      let coord = coords.shift();
+      table[coord] = lookup(table[coord] === undefined ? {} : table[coord], coords);
+    }
+    return table;
+  }
+
+  var dist = lookup(this.table, [locationA.longitude, locationA.latitude, locationB.longitude, locationB.latitude]);
+  return this.table[locationA.longitude][locationA.latitude][locationB.longitude][locationB.latitude];
 };
 
 const getDistance = (locationA, locationB) => {
@@ -95,14 +130,12 @@ const tasksData = [{
   delivery: { location: { longitude: 8, latitude: 2 } }
 }];
 
-// sequentialConstruction(depot, tasks);
-
-var route = new Route();
-
-var depot = new Depot(depotData, tasksData);
-console.log(depot);
-
-
+var distances = new Distances();
+console.log(distances.getDistance({longitude: 0, latitude: 0}, {longitude: 9, latitude: 9}));
+console.log(distances);
+console.log(distances.getDistance({longitude: 0, latitude: 0}, {longitude: 9, latitude: 9}));
+console.log(distances.getDistance({longitude: 2, latitude: 2}, {longitude: 10, latitude: 10}));
+console.log(distances);
 
 
 
