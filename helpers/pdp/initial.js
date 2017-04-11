@@ -20,24 +20,16 @@ const Depot = function(depot, tasks) {
 }
 
 Depot.prototype.sortTasks = function() {
+  // Sort tasks according to the distance from the depot to delivery location (farthest first)
   return this.tasks.sort((taskA, taskB) => {
     return getDistance(this.depot.location, taskB.delivery.location) - getDistance(this.depot.location, taskA.delivery.location);
   });
 };
 
 const getDistance = (locationA, locationB) => {
+  // Get distance of coordinate system
   return Math.sqrt(Math.pow(Math.abs(locationA.longitude - locationB.longitude), 2) 
     + Math.pow(Math.abs(locationA.latitude - locationB.latitude), 2));
-};
-
-// Sort tasks according to the distance from the depot to delivery location (farthest first)
-const sortDelivery = (depot, tasks) => {
-  return tasks.sort((taskA, taskB) => {
-    return Math.sqrt(Math.pow(Math.abs(depot.location.longitude - taskB.delivery.location.longitude), 2) 
-      + Math.pow(Math.abs(depot.location.latitude - taskB.delivery.location.latitude), 2)) 
-    - Math.sqrt(Math.pow(Math.abs(depot.location.longitude - taskA.delivery.location.longitude), 2) 
-      + Math.pow(Math.abs(depot.location.latitude - taskA.delivery.location.latitude), 2))
-  });
 };
 
 // Classical Hill-Climbing (HC) route-improvement heuristic
