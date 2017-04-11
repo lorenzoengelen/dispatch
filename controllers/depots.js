@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-var Depot = require('../models/depot');
+const Depot = require('../models/depot');
 
 router.route('/')
   .get((req, res) => {
