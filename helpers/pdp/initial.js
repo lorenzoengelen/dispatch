@@ -59,6 +59,7 @@ class Distance {
 class Route {
   constructor(sequence) {
     this.sequence = sequence || [];
+    this.temporarySequence = [];
   }
 
   // private class methods
@@ -89,7 +90,8 @@ class SequentialConstruction extends Distance {
     super();
     this.depot = depot;
     this.originalTasks = tasks;
-    this.unassignedTasks = this._sortTasks(tasks);
+    this.sortedTasks = this._sortTasks(tasks);
+    this.assignedTasks = 0;
   }
 
   // private class methods
@@ -103,43 +105,34 @@ class SequentialConstruction extends Distance {
 
   // public class methods
   getRoutes() {
+    let vehicles = 0;
+    let routes = [];
 
+    // until all tasks have been inserted
+    while (this.assignedTasks !== this.originalTasks.length) {
+      
+      let route = new Route();
+
+      // for all unassigned tasks
+      this.sortedTasks.forEach(task => {
+        if (task.assigned === undefined) {
+          task.assigned = true;
+          this.assignedTasks++;
+          
+          route.insertTask(task);
+        }
+      });
+
+      console.log(route.sequence);
+      routes.push(route.sequence);
+    }
+
+    // console.log(routes);
   }
 };
 
 var seq = new SequentialConstruction(depotData, tasksData);
-console.log(seq);
-
-const sequentialConstruction = (depot, tasks) => {
-
-  let unassignedTasks = sortDelivery(depot, tasks);
-
-  let vehicles = 0;
-  let routes = [];
-
-  while (unassignedTasks.length) {
-    let route = [];
-    vehicles++;
-
-    for (let i = 0, len = unassignedTasks.length; i < len; i++) {
-      route.push(unassignedTasks[i]);
-      
-      hillClimbing(route, (feasible, newRoute) => {
-        if (!feasible) {
-          route.pop();
-        } else {
-          route = newRoute
-          unassignedTasks.shift();
-          console.log(route);
-        }
-      });
-    }
-
-    routes.push(route);
-  }
-
-  // console.log(routes);
-};
+seq.getRoutes();
 
 
 
