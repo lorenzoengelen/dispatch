@@ -1,5 +1,64 @@
+const depotData = {
+  location: { longitude: 0, latitude: 0 }
+};
+
+const tasksData = [{
+  _id: 1,
+  pickup: { location: { longitude: 0, latitude: 1 } },
+  delivery: { location: { longitude: 0, latitude: 3 } }
+},{
+  _id: 2,
+  pickup: { location: { longitude: 1, latitude: 5 } },
+  delivery: { location: { longitude: 2, latitude: 7 } }
+},{
+  _id: 3,
+  pickup: { location: { longitude: 4, latitude: 10 } },
+  delivery: { location: { longitude: 8, latitude: 10 } }
+},{
+  _id: 4,
+  pickup: { location: { longitude: 9, latitude: 9 } },
+  delivery: { location: { longitude: 7, latitude: 7 } }
+},{
+  _id: 5,
+  pickup: { location: { longitude: 6, latitude: 5 } },
+  delivery: { location: { longitude: 8, latitude: 2 } }
+}];
+
 // Construct an initial solution
 // Based on Hosny & Mumford (2012)
+
+// Distance class
+class Distance {
+  constructor() {
+    this.table = {};
+  }
+
+  // private class methods
+  _checkTable(nested, coords, i) {
+    i = i || 0;
+    let coord = coords[i];
+    if (i === 3) {
+      return nested[coord] === undefined ? nested[coord] = this._calculateDistance(coords[0], coords[1], coords[2], coords[3]) : nested[coord]; 
+    } else {
+      return this._checkTable(nested[coord] === undefined ? nested[coord] = {} : nested[coord], coords, ++i);
+    }
+  }
+
+  _calculateDistance(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(Math.abs(x1 - x2), 2) 
+      + Math.pow(Math.abs(y1 - y2), 2));
+  }
+
+  // public class methods
+  getDistance(x1, y1, x2, y2) {
+    return this._checkTable(this.table, [x1, y1, x2, y2]);
+  }
+};
+
+var distance = new Distance();
+distance.getDistance(0, 0, 10, 10);
+distance.getDistance(3, 7, 8, 5);
+console.log(distance.table);
 
 // Route object
 const Route = function(sequence) {
@@ -36,29 +95,6 @@ Depot.prototype.sortTasks = function() {
   return this.tasks.sort((taskA, taskB) => {
     return getDistance(this.depot.location, taskB.delivery.location) - getDistance(this.depot.location, taskA.delivery.location);
   });
-};
-
-// Distances object
-const Distances = function() {
-  this.table = {};
-};
-
-Distances.prototype.getDistance = function(locationA, locationB) {
-  const lookup = (table, coords) => {
-    if (coords.length === 1) {
-      if (table[coords[0]] === undefined) {
-        table[coords[0]] = Math.sqrt(Math.pow(Math.abs(locationA.longitude - locationB.longitude), 2) 
-          + Math.pow(Math.abs(locationA.latitude - locationB.latitude), 2));
-      }
-    } else {
-      let coord = coords.shift();
-      table[coord] = lookup(table[coord] === undefined ? {} : table[coord], coords);
-    }
-    return table;
-  }
-
-  var dist = lookup(this.table, [locationA.longitude, locationA.latitude, locationB.longitude, locationB.latitude]);
-  return this.table[locationA.longitude][locationA.latitude][locationB.longitude][locationB.latitude];
 };
 
 const getDistance = (locationA, locationB) => {
@@ -103,43 +139,6 @@ const sequentialConstruction = (depot, tasks) => {
 
   // console.log(routes);
 };
-
-const depotData = {
-  location: { longitude: 0, latitude: 0 }
-};
-
-const tasksData = [{
-  _id: 1,
-  pickup: { location: { longitude: 0, latitude: 1 } },
-  delivery: { location: { longitude: 0, latitude: 3 } }
-},{
-  _id: 2,
-  pickup: { location: { longitude: 1, latitude: 5 } },
-  delivery: { location: { longitude: 2, latitude: 7 } }
-},{
-  _id: 3,
-  pickup: { location: { longitude: 4, latitude: 10 } },
-  delivery: { location: { longitude: 8, latitude: 10 } }
-},{
-  _id: 4,
-  pickup: { location: { longitude: 9, latitude: 9 } },
-  delivery: { location: { longitude: 7, latitude: 7 } }
-},{
-  _id: 5,
-  pickup: { location: { longitude: 6, latitude: 5 } },
-  delivery: { location: { longitude: 8, latitude: 2 } }
-}];
-
-var distances = new Distances();
-console.log(distances.getDistance({longitude: 0, latitude: 0}, {longitude: 9, latitude: 9}));
-console.log(distances);
-console.log(distances.getDistance({longitude: 0, latitude: 0}, {longitude: 9, latitude: 9}));
-console.log(distances.getDistance({longitude: 2, latitude: 2}, {longitude: 10, latitude: 10}));
-console.log(distances);
-
-
-
-
 
 
 
