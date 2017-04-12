@@ -3,23 +3,23 @@ const depotData = {
 };
 
 const tasksData = [{
-  _id: 1,
+  id: 1,
   pickup: { location: { longitude: 0, latitude: 1 } },
   delivery: { location: { longitude: 0, latitude: 3 } }
 },{
-  _id: 2,
+  id: 2,
   pickup: { location: { longitude: 1, latitude: 5 } },
   delivery: { location: { longitude: 2, latitude: 7 } }
 },{
-  _id: 3,
+  id: 3,
   pickup: { location: { longitude: 4, latitude: 10 } },
   delivery: { location: { longitude: 8, latitude: 10 } }
 },{
-  _id: 4,
+  id: 4,
   pickup: { location: { longitude: 9, latitude: 9 } },
   delivery: { location: { longitude: 7, latitude: 7 } }
 },{
-  _id: 5,
+  id: 5,
   pickup: { location: { longitude: 6, latitude: 5 } },
   delivery: { location: { longitude: 8, latitude: 2 } }
 }];
@@ -61,11 +61,18 @@ class Route {
     this.sequence = sequence || [];
   }
 
+  // private class methods
+  _hillClimbingAlgorithm() {
+    // Classical Hill-Climbing (HC) route-improvement heuristic
+
+  }
+
+  // public class methods
   insertTask(task) {
     let {id, pickup, delivery} = task;
     this.sequence = [...this.sequence, 
-      {id: _id, service: 'pickup', location: pickup.location}, 
-      {id: _id, service: 'delivery', location: delivery.location}];  
+      {id: id, service: 'pickup', location: pickup.location}, 
+      {id: id, service: 'delivery', location: delivery.location}];  
   }
 
   removeTask(id) {
@@ -76,32 +83,33 @@ class Route {
   }
 }
 
-// Depot object
-const Depot = function(depot, tasks) {
-  this.depot = depot;
-  this.tasks = tasks;
-  this.unassignedTasks = this.sortTasks();
-}
+// Sequential Construction Algorithm
+class SequentialConstruction extends Distance {
+  constructor(depot, tasks) {
+    super();
+    this.depot = depot;
+    this.originalTasks = tasks;
+    this.unassignedTasks = this._sortTasks(tasks);
+  }
 
-Depot.prototype.sortTasks = function() {
-  // Sort tasks according to the distance from the depot to delivery location (farthest first)
-  return this.tasks.sort((taskA, taskB) => {
-    return getDistance(this.depot.location, taskB.delivery.location) - getDistance(this.depot.location, taskA.delivery.location);
-  });
+  // private class methods
+  _sortTasks(tasks) {
+    // sorting tasks according to the distance from the depot (farthest first)
+    return tasks.slice().sort((taskA, taskB) => {
+      return this.getDistance(this.depot.location.longitude, this.depot.location.latitude, taskB.delivery.location.longitude, taskB.delivery.location.latitude) 
+      - this.getDistance(this.depot.location.longitude, this.depot.location.latitude, taskA.delivery.location.longitude, taskA.delivery.location.latitude);
+    });
+  }
+
+  // public class methods
+  getRoutes() {
+
+  }
 };
 
-const getDistance = (locationA, locationB) => {
-  // Get distance of coordinate system
-  return Math.sqrt(Math.pow(Math.abs(locationA.longitude - locationB.longitude), 2) 
-    + Math.pow(Math.abs(locationA.latitude - locationB.latitude), 2));
-};
+var seq = new SequentialConstruction(depotData, tasksData);
+console.log(seq);
 
-// Classical Hill-Climbing (HC) route-improvement heuristic
-const hillClimbing = (route, cb) => {
-  return cb(true, route);
-};
-
-// Sequential construction algorithm
 const sequentialConstruction = (depot, tasks) => {
 
   let unassignedTasks = sortDelivery(depot, tasks);
