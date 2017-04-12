@@ -38,9 +38,9 @@ class Distance {
     i = i || 0;
     let coord = coords[i];
     if (i === 3) {
-      return nested[coord] === undefined ? nested[coord] = this._calculateDistance(coords[0], coords[1], coords[2], coords[3]) : nested[coord]; 
+      return !nested[coord] ? nested[coord] = this._calculateDistance(coords[0], coords[1], coords[2], coords[3]) : nested[coord]; 
     } else {
-      return this._checkTable(nested[coord] === undefined ? nested[coord] = {} : nested[coord], coords, ++i);
+      return this._checkTable(!nested[coord] ? nested[coord] = {} : nested[coord], coords, ++i);
     }
   }
 
@@ -103,6 +103,11 @@ class SequentialConstruction extends Distance {
     });
   }
 
+  _assignTask(task) {
+    task.assigned = true;
+    this.assignedTasks++;
+  }
+
   // public class methods
   getRoutes() {
     let vehicles = 0;
@@ -115,24 +120,24 @@ class SequentialConstruction extends Distance {
 
       // for all unassigned tasks
       this.sortedTasks.forEach(task => {
-        if (task.assigned === undefined) {
-          task.assigned = true;
-          this.assignedTasks++;
-          
+        if (!task.assigned && Math.round(Math.random())) {
+          this._assignTask(task);
+
           route.insertTask(task);
         }
       });
 
-      console.log(route.sequence);
-      routes.push(route.sequence);
+      if (route.sequence.length !== 0) {
+        routes.push(route.sequence);
+      }
     }
 
-    // console.log(routes);
+    console.log(routes);
   }
 };
 
-var seq = new SequentialConstruction(depotData, tasksData);
-seq.getRoutes();
+// var seq = new SequentialConstruction(depotData, tasksData);
+// seq.getRoutes();
 
 
 
