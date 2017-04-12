@@ -55,33 +55,26 @@ class Distance {
   }
 };
 
-var distance = new Distance();
-distance.getDistance(0, 0, 10, 10);
-distance.getDistance(3, 7, 8, 5);
-console.log(distance.table);
+// Route class
+class Route {
+  constructor(sequence) {
+    this.sequence = sequence || [];
+  }
 
-// Route object
-const Route = function(sequence) {
-  this.sequence = sequence || [];
-};
+  insertTask(task) {
+    let {id, pickup, delivery} = task;
+    this.sequence = [...this.sequence, 
+      {id: _id, service: 'pickup', location: pickup.location}, 
+      {id: _id, service: 'delivery', location: delivery.location}];  
+  }
 
-Route.prototype.insertTask = function(task) {
-  let {_id, pickup, delivery} = task;
-  this.sequence = [...this.sequence, 
-    {id: _id, service: 'pickup', location: pickup.location}, 
-    {id: _id, service: 'delivery', location: delivery.location}];
-};
-
-Route.prototype.removeTask = function(id) {
-  this.sequence = this.sequence.filter(el => {
-    if (el.id !== id) return true;
-    return false;
-  });
-};
-
-Route.prototype.calculateCost = function() {
-
-};
+  removeTask(id) {
+    this.sequence = this.sequence.filter(el => {
+      if (el.id !== id) return true;
+      return false;
+    });
+  }
+}
 
 // Depot object
 const Depot = function(depot, tasks) {
