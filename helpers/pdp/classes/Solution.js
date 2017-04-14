@@ -1,3 +1,5 @@
+const Route = require('./Route');
+
 class Solution {
   constructor(problem) {
     this.problem = problem;
@@ -6,8 +8,10 @@ class Solution {
     this.totalCost = 0;
   }
 
-  initialConstruction() {
-    console.log('hello');
+  sequentialConstruction() {
+    let M = 0; // M is number of vehicles used
+
+    
   }
 };
 
