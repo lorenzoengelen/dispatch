@@ -59,21 +59,43 @@ class Distance {
 class Route {
   constructor(sequence) {
     this.sequence = sequence || [];
-    this.temporarySequence = [];
   }
 
   // private class methods
-  _hillClimbingAlgorithm() {
+  _hillClimbingAlgorithm(route) {
     // Classical Hill-Climbing (HC) route-improvement heuristic
+
+    for (let i = route.length - 1; i >= 0; i--) {
+      let index = route.findIndex(task => {
+        return task.id === route[i].id;
+      });
+      console.log('current i:', i, 'first index:', index);
+    }
+  }
+
+  _computeCost() {
 
   }
 
+  _swapTasks(route, i, j) {
+    if (route.length === 1) return route;
+    route.splice(j, 1, route.splice(i, 1, route[j])[0]);
+    return route;
+  }
+
   // public class methods
-  insertTask(task) {
+  tryInsertTask(task, cb) {
     let {id, pickup, delivery} = task;
-    this.sequence = [...this.sequence, 
+    let route = [...this.sequence, 
       {id: id, service: 'pickup', location: pickup.location}, 
-      {id: id, service: 'delivery', location: delivery.location}];  
+      {id: id, service: 'delivery', location: delivery.location}];
+
+    this._hillClimbingAlgorithm(route);
+
+    // mimic result of algorithm
+    let inserted = Math.round(Math.random());
+    if (inserted) this.sequence = route;
+    cb(inserted);
   }
 
   removeTask(id) {
@@ -120,10 +142,11 @@ class SequentialConstruction extends Distance {
 
       // for all unassigned tasks
       this.sortedTasks.forEach(task => {
-        if (!task.assigned && Math.round(Math.random())) {
-          this._assignTask(task);
+        if (!task.assigned) {
 
-          route.insertTask(task);
+          route.tryInsertTask(task, inserted => {
+            if (inserted) this._assignTask(task);
+          });
         }
       });
 
@@ -136,9 +159,22 @@ class SequentialConstruction extends Distance {
   }
 };
 
-// var seq = new SequentialConstruction(depotData, tasksData);
-// seq.getRoutes();
+var seq = new SequentialConstruction(depotData, tasksData);
+seq.getRoutes();
 
+var prod = -2;
+var B = 0.50;
+
+var a = Math.pow(Math.E, prod);
+var b = (Math.pow(Math.E, prod)+ Math.pow(Math.E, B) + Math.pow(Math.E, 1));
+var c = a / b;
+
+var x = Math.pow(Math.E, B);
+var y = b;
+var z = x / y;
+
+var sum = 6 * Math.min(0.37 * 10, 2 * 4) + 1 * Math.min(0.03 * 10, 4);
+console.log(sum);
 
 
 
