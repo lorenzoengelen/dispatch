@@ -1,0 +1,23 @@
+{
+  "K": 2,
+  "Q": 100,
+  "N": [{
+    "nid": 0, "x": 0, "y": 0, "demand": 0, "twOpen": 0, "twClose": 150, "service": 0, "pid": 0, "did": 0
+  },{
+    "nid": 1, "x": 11, "y": 11, "demand": 20, "twOpen": 20, "twClose": 100, "service": 10, "pid": 0, "did": 7
+  },{
+    "nid": 2, "x": -10, "y": -15, "demand": 30, "twOpen": 50, "twClose": 200, "service": 10, "pid": 0, "did": 4
+  },{
+    "nid": 3, "x": 16, "y": 11, "demand": -20, "twOpen": 20, "twClose": 100, "service": 10, "pid": 8, "did": 0
+  },{
+    "nid": 4, "x": -15, "y": -15, "demand": -30, "twOpen": 50, "twClose": 150, "service": 10, "pid": 2, "did": 0
+  },{
+    "nid": 5, "x": -10, "y": -10, "demand": 30, "twOpen": 50, "twClose": 200, "service": 10, "pid": 0, "did": 6
+  },{
+    "nid": 6, "x": -15, "y": -10, "demand": -30, "twOpen": 50, "twClose": 200, "service": 10, "pid": 5, "did": 0
+  },{
+    "nid": 7, "x": 11, "y": 16, "demand": -20, "twOpen": 20, "twClose": 100, "service": 10, "pid": 1, "did": 0
+  },{
+    "nid": 8, "x": 16, "y": 16, "demand": 20, "twOpen": 20, "twClose": 100, "service": 10, "pid": 0, "did": 3
+  }]
+}
