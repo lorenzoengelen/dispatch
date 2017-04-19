@@ -29,24 +29,23 @@ describe('Problem Class', () => {
     expect(problem.O).to.be.empty;
   });
 
-  describe('loadProblem function', () => {
-
+  describe('loadProblem method', () => {
     let problem = new Problem();
 
     it('should exist', () => {
       expect(problem.loadProblem()).be.function; 
     });
 
-    it('should parse K of json file', () => {
+    it('should parse number of vehicles K of json file', () => {
       problem.loadProblem(json);
       expect(problem.K).to.equal(json.K);
     })
 
-    it('should parse Q of json file', () => {
+    it('should parse vehicle capacity Q of json file', () => {
       expect(problem.Q).to.equal(json.Q);
     })
 
-    it('should parse nodes of json file', () => {
+    it('should parse nodes N of json file', () => {
       expect(problem.N).to.have.lengthOf(json.N.length);
       expect(problem.N[0]).to.be.an.instanceof(Node);
       expect(problem.N[0].nid, 'node id').to.equal(json.N[0].nid);
@@ -60,6 +59,51 @@ describe('Problem Class', () => {
       expect(problem.N[0].did, 'delivery id').to.equal(json.N[0].did);
     });
 
+    it('should create an array orders O', () => {
+      
+    });
   }); // loadProblem function
+
+  describe('_getNodeCount method', () => {
+    let problem = new Problem();
+
+    it('should exist', () => {
+      expect(problem._getNodeCount()).be.function;
+    });
+
+    it('should return #nodes', () => {
+      problem.N.push(new Node());
+      problem.N.push(new Node());
+      expect(problem._getNodeCount()).to.equal(2);
+    });
+  }); // getNodeCount method
+
+  describe('_getOrderCount method', () => {
+    let problem = new Problem();
+
+    it('should exist', () => {
+      expect(problem._getOrderCount()).be.function;
+    });
+
+    it('should return #orders', () => {
+      problem.O.push(1);
+      problem.O.push(2);
+      problem.O.push(3);
+      expect(problem._getOrderCount()).to.equal(3);
+    });
+  }); // getOrderCount method
+
+  describe('_distance method', () => {
+    it('should return the Euclidean distance', () => {
+      let node1 = new Node();
+      let node2 = new Node();
+      node1.setXY(5, 5);
+      node2.setXY(6, 6);
+      expect(problem._distance(node1, node2)).to.equal(Math.sqrt(2));
+
+      node2.setXY(3, 28);
+      expect(problem._distance(node1, node2)).to.equal(Math.sqrt(Math.pow(node1.x - node2.x, 2) + Math.pow(node1.y - node2.y, 2)));
+    });
+  });
 
 }); // Problem Class
