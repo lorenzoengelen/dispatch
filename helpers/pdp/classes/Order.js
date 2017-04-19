@@ -1,11 +1,11 @@
 class Order {
-  constructor(id) {
-    this.oid = id;
-    this.pid;
-    this.did;
+  constructor(oid, pid, did, distD) {
+    this.oid = oid;
+    this.pid = pid;
+    this.did = did;
 
     this.distP; // distance depot - pickup location
-    this.distD; // distance depot - delivery location
+    this.distD = distD; // distance depot - delivery location
   }
 };
 
