@@ -1,17 +1,17 @@
 class Node {
-  constructor(id) {
-    this.nid = id; // node id (0 = depot)
+  constructor(nid, x, y, demand, twOpen, twClose, service, pid, did) {
+    this.nid = nid; // node id (0 = depot)
     
-    this.x;
-    this.y;
+    this.x = x;
+    this.y = y;
     
-    this.demand; // request size (+ for pickup, - for delivery)
-    this.twOpen; //
-    this.twClose; //
-    this.service; // service time
+    this.demand = demand; // request size (+ for pickup, - for delivery)
+    this.twOpen = twOpen; //
+    this.twClose = twClose; //
+    this.service = service; // service time
 
-    this.pid; // pickup id of sibling
-    this.did; // delivery id of sibling
+    this.pid = pid; // pickup id of sibling
+    this.did = did; // delivery id of sibling
   }
 };
 
