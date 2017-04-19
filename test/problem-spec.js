@@ -1,10 +1,14 @@
 const chai = require('chai');
+const chaiSorted = require('chai-sorted');
 const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
+chai.use(chaiSorted);
+
 const Problem = require('../helpers/pdp/classes/Problem');
 const Node = require('../helpers/pdp/classes/Node');
+const Order = require('../helpers/pdp/classes/Order');
 const json = require('./problem-spec.json');
 
 describe('Problem Class', () => {
@@ -46,21 +50,31 @@ describe('Problem Class', () => {
     })
 
     it('should parse nodes N of json file', () => {
-      expect(problem.N).to.have.lengthOf(json.N.length);
-      expect(problem.N[0]).to.be.an.instanceof(Node);
-      expect(problem.N[0].nid, 'node id').to.equal(json.N[0].nid);
-      expect(problem.N[0].x, 'x location').to.equal(json.N[0].x);
-      expect(problem.N[0].y, 'y location').to.equal(json.N[0].y);
-      expect(problem.N[0].demand, 'demand quantity').to.equal(json.N[0].demand);
-      expect(problem.N[0].twOpen, 'earliest time window').to.equal(json.N[0].twOpen);
-      expect(problem.N[0].twClose, 'latest time window').to.equal(json.N[0].twClose);
-      expect(problem.N[0].service, 'service time').to.equal(json.N[0].service);
-      expect(problem.N[0].pid, 'pickup id').to.equal(json.N[0].pid);
-      expect(problem.N[0].did, 'delivery id').to.equal(json.N[0].did);
+      let len = json.N.length;
+      let r = Math.floor(Math.random() * len);
+      expect(problem.N).to.have.lengthOf(len);
+      expect(problem.N[r]).to.be.an.instanceof(Node);
+      expect(problem.N[r].nid, 'node id').to.equal(json.N[r].nid);
+      expect(problem.N[r].x, 'x location').to.equal(json.N[r].x);
+      expect(problem.N[r].y, 'y location').to.equal(json.N[r].y);
+      expect(problem.N[r].demand, 'demand quantity').to.equal(json.N[r].demand);
+      expect(problem.N[r].twOpen, 'earliest time window').to.equal(json.N[r].twOpen);
+      expect(problem.N[r].twClose, 'latest time window').to.equal(json.N[r].twClose);
+      expect(problem.N[r].service, 'service time').to.equal(json.N[r].service);
+      expect(problem.N[r].pid, 'pickup id').to.equal(json.N[r].pid);
+      expect(problem.N[r].did, 'delivery id').to.equal(json.N[r].did);
     });
 
-    it('should create an array orders O', () => {
-      
+    it('should create a sorted array of orders O (including depot)', () => {
+      let len = json.N.length / 2;
+      let r = Math.floor(Math.random() * len);
+      expect(problem.O).to.have.lengthOf(Math.ceil(len));
+      expect(problem.O[r]).to.be.an.instanceof(Order);
+      expect(problem.O[r].oid, 'order id').to.exist;
+      expect(problem.O[r].pid, 'pickup id').to.exist;
+      expect(problem.O[r].did, 'delivery id').to.exist;
+      expect(problem.O[r].distD, 'distance depot to delivery location').to.exist;
+      expect(problem.O).to.be.sortedBy('distD');
     });
   }); // loadProblem function
 
@@ -93,17 +107,17 @@ describe('Problem Class', () => {
     });
   }); // getOrderCount method
 
-  describe('_distance method', () => {
+  describe('_getNodeDistance method', () => {
     it('should return the Euclidean distance', () => {
       let node1 = new Node();
       let node2 = new Node();
       node1.setXY(5, 5);
       node2.setXY(6, 6);
-      expect(problem._distance(node1, node2)).to.equal(Math.sqrt(2));
+      expect(problem._getNodeDistance(node1, node2)).to.equal(Math.sqrt(2));
 
       node2.setXY(3, 28);
-      expect(problem._distance(node1, node2)).to.equal(Math.sqrt(Math.pow(node1.x - node2.x, 2) + Math.pow(node1.y - node2.y, 2)));
+      expect(problem._getNodeDistance(node1, node2)).to.equal(Math.sqrt(Math.pow(node1.x - node2.x, 2) + Math.pow(node1.y - node2.y, 2)));
     });
-  });
+  }); // distance method
 
 }); // Problem Class
