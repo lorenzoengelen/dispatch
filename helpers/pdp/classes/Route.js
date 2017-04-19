@@ -1,3 +1,7 @@
+const w1 = 0.201;
+const w2 = 0.7;
+const w3 = 0.099;
+
 class Route {
   constructor(id) {
     this.rid = id;
@@ -16,14 +20,17 @@ class Route {
     this.tCV = 0; // test capacity violations
   }
 
-  update() {
+  // private class methods
+  _swap(a, b) {
+    let tmp = a;
+    a = b;
+    b = tmp;
+  }
+
+  _update() {
     let D = 0;
     let TWV = 0;
     let CV = 0;
-
-    const w1 = 0.201;
-    const w2 = 0.7;
-    const w3 = 0.099;
 
     let q = 0; // used capacity
 
@@ -35,9 +42,7 @@ class Route {
     this.TWV = TWV;
     this.CV = CV;
 
-
     this.cost = w1 * D + w2 * TWV + w3 * CV;
-
     this.updated = false;
   }
 
@@ -45,18 +50,15 @@ class Route {
   }
 
   getCost() {
-    if (this.updated) {
-
-    }
+    if (this.updated) this._update();
+    return this.cost;
   }
 
-  addOrder(order) {
+
+  _insertOrder(orderId) {
   }
 
-  insertOrder(orderId) {
-  }
-
-  removeOrder(orderId) {
+  _removeOrder(orderId) {
   }
 
   addPickup(order) {
@@ -64,12 +66,28 @@ class Route {
 
   addDelivery(order) {
   }
+  
+  addOrder(order) {
+    this.updated = true;
+  }
 
   hillClimbOptimization() {
-  }
+    let oldCost = this.getCost();
 
-  dump() {
-  }
+    while (true) {
+      let improved = false;
+
+      for (let i = 0, len = this.path.length; i < len; i++) {
+        for (let j = i + 1, len = this.path.length; j < len; j++) {
+          if (this.orders[i] === this.orders[j]) break;
+
+        }
+      }
+
+      if (!improved) break;
+    } // end while
+
+  } // end HC Algorithm
 
 };
 
