@@ -16,7 +16,21 @@ class Problem {
 
   // private class methods
   _makeOrders() {
+    if (this._getNodeCount() === 0) return;
+    let oid = 0;
 
+  }
+
+  _getNodeCount() {
+    return this.N.length;
+  }
+
+  _getOrderCount() {
+    return this.O.length;
+  }
+
+  _distance(n1, n2) {
+    return Math.sqrt(Math.pow(n1.x - n2.x, 2) + Math.pow(n1.y - n2.y, 2));
   }
 
   // public class methods
@@ -28,17 +42,6 @@ class Problem {
       let node = new Node(n.nid, n.x, n.y, n.demand, n.twOpen, n.twClose, n.service, n.pid, n.did);
       this.N.push(node);
     });
-  }
-
-  getNodeCount() {
-    return this.N.length;
-  }
-
-  getOrderCount() {
-    return this.O.length;
-  }
-
-  distance(n1, n2) {
   }
 
   makeOrder() {
