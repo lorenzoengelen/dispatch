@@ -13,6 +13,11 @@ class Node {
     this.pid = pid; // pickup id of sibling
     this.did = did; // delivery id of sibling
   }
+
+  setXY(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 };
 
 module.exports = Node;
