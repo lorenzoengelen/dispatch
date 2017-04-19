@@ -33,7 +33,6 @@ class Problem {
     this.O.sort((a, b) => {
       return b.distD < a.distD;
     })
-    // console.log(this.O);
   }
 
   _getNodeCount() {
@@ -61,8 +60,6 @@ class Problem {
     this._makeOrders();
   }
 
-  makeOrder() {
-  }
 }
 
 module.exports = Problem;
