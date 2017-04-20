@@ -11,9 +11,9 @@ exports.initPDP = initPDP = () => {
   
   const problem = new Problem();
   problem.loadProblem(test);
-  console.log(problem);
 
   const solution = new Solution(problem);
+  solution.sequentialConstruction();
 };
 
 // compute an optimized solution

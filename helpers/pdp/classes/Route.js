@@ -68,6 +68,7 @@ class Route {
   }
   
   addOrder(order) {
+    this.path = [...this.path, order.pid, order.did];
     this.updated = true;
   }
 
