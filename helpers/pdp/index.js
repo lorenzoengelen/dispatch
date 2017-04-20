@@ -4,12 +4,23 @@ const Problem = require('./classes/Problem');
 const Route = require('./classes/Route');
 const Solution = require('./classes/Solution');
 
-var problem = new Problem();
-problem.loadProblem();
+const test = require('./test.json');
 
-// for (var i = 0; i < 5; i++) {
-//   for (var j = i + 1; j < 5; j++) {
-//     if (i === j) break;
-//     console.log('i:', i, 'and j:', j);
-//   }
-// }
+// compute an initial solution
+exports.initPDP = initPDP = () => {
+  
+  const problem = new Problem();
+  problem.loadProblem(test);
+  console.log(problem);
+
+  const solution = new Solution(problem);
+};
+
+// compute an optimized solution
+exports.optimizePDP = optimizePDP = () => {
+  // here comes the optimization function
+  // GA or TS
+
+};
+
+initPDP();
