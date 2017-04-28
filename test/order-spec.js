@@ -5,7 +5,7 @@ const should = chai.should();
 
 const Order = require('../helpers/pdp/classes/Order');
 
-describe('Order Class', () => {
+describe('Order PDP Class', () => {
   let order = new Order(1, 2, 3, 4);
 
   it('should have a value for order id (oid) property', () => {
