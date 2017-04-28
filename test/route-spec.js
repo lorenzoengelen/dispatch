@@ -4,6 +4,7 @@ const expect = chai.expect;
 const should = chai.should();
 
 const Route = require('../helpers/pdp/classes/Route');
+const Order = require('../helpers/pdp/classes/Order');
 
 describe('Route Class', () => {
   let route = new Route(99);
@@ -43,4 +44,19 @@ describe('Route Class', () => {
   it('should have a route cost (cost) property', () => {
     expect(route.cost).to.exist;
   });
+
+  describe('addOrder method', () => {
+    let route = new Route(100);
+    let order = new Order(1, 2, 3, 4);
+
+    it('push order pickup id and delivery id to end of path', () => {
+      route.addOrder(order);
+      expect(route.path[route.path.length - 1]).to.equal(order.did);
+      expect(route.path[route.path.length - 2]).to.equal(order.pid);
+    });
+
+    it('push order pickup id and delivery id to end of orders', () => {
+
+    });
+  })
 });
