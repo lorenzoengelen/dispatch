@@ -16,7 +16,7 @@ exports.create = (body, cb) => {
     body.forEach((el, index) => {
       if (index + 1 === body.length) {
         createVehicle(el, newVehicle => {
-          newVehicle.push(newVehicle);
+          newVehicles.push(newVehicle);
           cb(null, newVehicles);
         })
       } else {
@@ -32,4 +32,36 @@ exports.create = (body, cb) => {
     });
   }
 
+};
+
+exports.readAll = cb => {
+  db.find({}).exec((err, vehicles) => {
+    if (err) return cb(err);
+    cb(null, vehicles);
+  });
+}
+
+exports.update = (id, body, cb) => {
+  const {type} = body;
+  db.findOneAndUpdate({_id: id}, {type: type}, (err, vehicle) => {
+    if (err) return cb(err);
+    cb(null, vehicle);
+  });
+};
+
+exports.deleteAll = cb => {
+  db.find({}).exec((err, vehicles) => {
+    if (err) return cb(err);
+    db.remove(err => {
+      if (err) return cb(err);
+      cb(null, vehicles);
+    });
+  });
+};
+
+exports.delete = (id, db) => {
+  db.findOneAndRemove({_id: id}, (err, vehicle) => {
+    if (err) return cb(err);
+    cb(null, vehicle);
+  });
 };

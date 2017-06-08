@@ -16,7 +16,7 @@ exports.create = (body, cb) => {
     body.forEach((el, index) => {
       if (index + 1 === body.length) {
         createOrder(el, newOrder => {
-          newOrder.push(newOrder);
+          newOrders.push(newOrder);
           cb(null, newOrders);
         });
       } else {

@@ -5,6 +5,7 @@ mongoose.Promise = global.Promise;
 
 const vehicleSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
+  name: String,
   depot: {
     id: String,
     name: String,

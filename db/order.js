@@ -10,8 +10,8 @@ const orderSchema = new mongoose.Schema({
   pickup: {
     serviceTime: Number,
     timeWindow: {
-      earliest: Number,
-      latest: Number
+      earliest: String,
+      latest: String
     },
     location: {
       lon: Number,
@@ -21,8 +21,8 @@ const orderSchema = new mongoose.Schema({
   delivery: {
     serviceTime: Number,
     timeWindow: {
-      earliest: Number,
-      latest: Number
+      earliest: String,
+      latest: String
     },
     location: {
       lon: Number,

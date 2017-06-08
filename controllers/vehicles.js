@@ -5,7 +5,10 @@ const Vehicle = require('../models/vehicle');
 
 router.route('/')
   .get((req, res) => {
-
+    Vehicle.readAll((err, vehicles) => {
+      if (err) res.send(err);
+      res.send(vehicles);
+    });
   })
   .post((req, res) => {
     const {body} = req;
@@ -15,7 +18,10 @@ router.route('/')
     });
   })
   .delete((req, res) => {
-
+    Vehicle.deleteAll((err, vehicles) => {
+      if (err) res.send(err);
+      res.send(vehicles);
+    });
   });
 
 router.route('/:id')
