@@ -6,6 +6,7 @@ mongoose.Promise = global.Promise;
 const orderSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
   name: String,
+  arrivalTime: String,
   load: Number,
   pickup: {
     serviceTime: Number,
