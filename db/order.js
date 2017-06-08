@@ -8,8 +8,8 @@ const orderSchema = new mongoose.Schema({
   name: String,
   load: Number,
   pickup: {
-    service_time: Number,
-    time_window: {
+    serviceTime: Number,
+    timeWindow: {
       earliest: Number,
       latest: Number
     },
@@ -19,8 +19,8 @@ const orderSchema = new mongoose.Schema({
     }
   },
   delivery: {
-    service_time: Number,
-    time_window: {
+    serviceTime: Number,
+    timeWindow: {
       earliest: Number,
       latest: Number
     },
