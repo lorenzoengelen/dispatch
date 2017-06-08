@@ -7,25 +7,25 @@ const orderSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
   load: Number,
   pickup: {
-    serviceTime: Number,
-    timeWindow: {
-      earliestTime: Number,
-      latestTime: Number
+    service_time: Number,
+    time_window: {
+      earliest: Number,
+      latest: Number
     },
     location: {
-      longitude: Number,
-      latitude: Number
+      lon: Number,
+      lat: Number
     }
   },
   delivery: {
-    serviceTime: Number,
-    timeWindow: {
-      earliestTime: Number,
-      latestTime: Number
+    service_time: Number,
+    time_window: {
+      earliest: Number,
+      latest: Number
     },
     location: {
-      longitude: Number,
-      latitude: Number
+      lon: Number,
+      lat: Number
     }
   }
 });
