@@ -3,8 +3,8 @@ const db = require('../db/order');
 exports.create = (body, cb) => {
   
   const createOrder = (newOrder, callback) => {
-    let {load, pickup, delivery} = newOrder;
-    db.create({load, pickup, delivery}, (err, order) => {
+    let {name, load, pickup, delivery} = newOrder;
+    db.create({name, load, pickup, delivery}, (err, order) => {
       if (err) return cb(err);
       callback(order);
     });
