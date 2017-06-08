@@ -8,6 +8,15 @@ class Order {
     this.l = l || 0; // latest time
     this.s = s || 0; // service time
   }
+
+  getEarliestTime() {
+  }
+
+  getLatestTime() {
+  }
+
+  getOrderDemand() {
+  }
 };
 
 module.exports = Order;
